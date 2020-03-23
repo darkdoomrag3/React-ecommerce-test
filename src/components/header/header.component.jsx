@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+
 import './header.style.scss';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
@@ -8,37 +8,38 @@ import { ReactComponent as Logo } from '../../assest/crown.svg';
 import CardDropDown from '../card-dropdown/card-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser } from '../../redux/user/user.selector';
-
+import { OptionContainerStyles, OptionLink, LogoContainer, OptionsContainer, HeaderContainer } from './header.style'
 
 const Header = ({ currentUser, hidden }) => {
     return (
 
-        <div className='header'>
-            <Link to="/" className='logo-container'>
-
+        <HeaderContainer>
+            <LogoContainer to='/'>
                 <Logo className='logo' />
+            </LogoContainer>
 
-            </Link>
 
+            <OptionsContainer>
 
-            <div className='options' >
+                <OptionLink as='div' to='/shop'>
 
-                <Link to="/shop" className='option' >
-                    Shop
-           </Link>
-               
-         
-                <Link to="/signin" className='option'>
-                    signin
-           </Link>
-
-                <Link to="" className='option'>
                     Contact
-           </Link>
+            </OptionLink>
+
+                <OptionLink to='/shop'>
+
+                    Shop
+</OptionLink>
+
+                <OptionLink to='/singout'> Sign Out </OptionLink>
+                <OptionLink to='/signin'>Sing In</OptionLink>
 
                 <CardIcon />
 
-            </div>
+            </OptionsContainer>
+
+
+
             {
 
                 hidden ? null :
@@ -47,13 +48,13 @@ const Header = ({ currentUser, hidden }) => {
 
             }
 
-        </div>
+        </HeaderContainer>
     )
 }
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
     hidden: selectCartHidden
-  });
+});
 
 export default connect(mapStateToProps)(Header);
